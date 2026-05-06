@@ -9,48 +9,19 @@ import MainLayout
 import CreateAccountView
     from "@/views/CreateAccountView.vue";
 
-import AccountsView
-    from "@/views/AccountsView.vue";
-
-import AccountView
-    from "@/views/AccountView.vue";
-
 const routes = [
 
     {
         path: "/",
 
-        component:
-        MainLayout,
+        component: MainLayout,
 
         children: [
 
             {
                 path: "",
 
-                redirect:
-                    "/create-account"
-            },
-
-            {
-                path: "create-account",
-
-                component:
-                CreateAccountView
-            },
-
-            {
-                path: "accounts",
-
-                component:
-                AccountsView
-            },
-
-            {
-                path: "accounts/:id",
-
-                component:
-                AccountView
+                component: CreateAccountView
             }
         ]
     }
@@ -58,8 +29,7 @@ const routes = [
 
 export default createRouter({
 
-    history:
-        createWebHistory(),
+    history: createWebHistory(),
 
     routes
 });
