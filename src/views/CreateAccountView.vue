@@ -1,82 +1,52 @@
 <script setup>
 
-import {
-  ref
-} from "vue";
+import {ref} from "vue";
+import {getMoovToken} from "@/api/moov.js";
 
-import {
-  getMoovToken
-} from "@/api/moov.js";
+const loading = ref(false);
+const onboardingRef = ref(null);
 
-const loading =
-    ref(false);
-
-const onboardingRef =
-    ref(null);
-
-const FACILITATOR_ACCOUNT_ID =
-    "4f37cc44-9956-4485-8df7-9462c5cfd8fa";
+const FACILITATOR_ACCOUNT_ID = "4f37cc44-9956-4485-8df7-9462c5cfd8fa";
 
 const openOnboarding =
     async () => {
-
       try {
-
         loading.value = true;
-
         const tokenResponse =
             await getMoovToken({
 
               type:
                   "INITIAL"
             });
-
         const onboarding =
             onboardingRef.value;
-
         onboarding.token =
             tokenResponse.access_token;
-
         onboarding.facilitatorAccountID =
             FACILITATOR_ACCOUNT_ID;
-
         onboarding.capabilities = [
-
           "transfers"
         ];
-
         onboarding.accountTypes = [
-
           "individual",
-
           "business"
         ];
-
         onboarding.showLogo = false;
-
         onboarding.onResourceCreated =
             handleResourceCreated;
-
         onboarding.onSuccess =
             handleSuccess;
-
         onboarding.onError =
             handleError;
-
         onboarding.onCancel =
             handleCancel;
-
         onboarding.open = true;
-
       } catch (error) {
-
         console.error(
             "INIT ERROR",
             error
         );
-
       } finally {
-
         loading.value = false;
       }
     };

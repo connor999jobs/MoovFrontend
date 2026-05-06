@@ -10,17 +10,12 @@ import CreateAccountView
     from "@/views/CreateAccountView.vue";
 
 const routes = [
-
     {
         path: "/",
-
         component: MainLayout,
-
         children: [
-
             {
                 path: "",
-
                 component: CreateAccountView
             }
         ]
@@ -28,8 +23,6 @@ const routes = [
 ];
 
 export default createRouter({
-
     history: createWebHistory(),
-
     routes
 });

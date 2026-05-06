@@ -1,13 +1,8 @@
 <script setup>
-
-import {
-  RouterLink
-} from "vue-router";
-
+import {RouterLink} from "vue-router";
 </script>
 
 <template>
-
   <aside
       class="
         w-[260px]
@@ -17,7 +12,6 @@ import {
         p-6
       "
   >
-
     <h1
         class="
           mb-8
@@ -25,13 +19,9 @@ import {
           font-bold
         "
     >
-
       Moov Admin
-
     </h1>
-
     <nav class="space-y-2">
-
       <RouterLink
           to="/create-account"
           class="
@@ -42,11 +32,8 @@ import {
             py-3
           "
       >
-
         Create Account
-
       </RouterLink>
-
       <RouterLink
           to="/accounts"
           class="
@@ -57,13 +44,8 @@ import {
             py-3
           "
       >
-
         Accounts
-
       </RouterLink>
-
     </nav>
-
   </aside>
-
 </template>
