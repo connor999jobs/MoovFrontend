@@ -1,56 +1,142 @@
 <script setup>
 
-import {ref} from "vue";
-import {getMoovToken} from "@/api/moov.js";
+import {
+  ref,
+  nextTick
+} from "vue";
 
-const loading = ref(false);
-const onboardingRef = ref(null);
+import {
+  getMoovToken
+} from "@/api/moov.js";
 
-const FACILITATOR_ACCOUNT_ID = "4f37cc44-9956-4485-8df7-9462c5cfd8fa";
+const loading =
+    ref(false);
+
+const onboardingVisible =
+    ref(false);
+
+const onboardingRef =
+    ref(null);
+
+const FACILITATOR_ACCOUNT_ID =
+    "4f37cc44-9956-4485-8df7-9462c5cfd8fa";
 
 const openOnboarding =
     async () => {
+
       try {
+
         loading.value = true;
+
+        /*
+          GET INITIAL TOKEN
+        */
+
         const tokenResponse =
             await getMoovToken({
 
-              type:
-                  "INITIAL"
+              type: "INITIAL"
             });
+
+        /*
+          RENDER COMPONENT
+        */
+
+        onboardingVisible.value =
+            true;
+
+        /*
+          WAIT DOM
+        */
+
+        await nextTick();
+
+        /*
+          COMPONENT
+        */
+
         const onboarding =
             onboardingRef.value;
+
+        /*
+          TOKEN
+        */
+
         onboarding.token =
             tokenResponse.access_token;
+
+        /*
+          FACILITATOR
+        */
+
         onboarding.facilitatorAccountID =
             FACILITATOR_ACCOUNT_ID;
+
+        /*
+          CAPABILITIES
+        */
+
         onboarding.capabilities = [
+
           "transfers",
+
           "collect-funds.ach",
+
           "collect-funds.card-payments",
+
           "send-funds.ach",
+
           "wallet.balance"
         ];
+
+        /*
+          ACCOUNT TYPES
+        */
+
         onboarding.accountTypes = [
+
           "individual",
+
           "business"
         ];
+
+        /*
+          UI
+        */
+
         onboarding.showLogo = false;
+
+        /*
+          CALLBACKS
+        */
+
         onboarding.onResourceCreated =
             handleResourceCreated;
+
         onboarding.onSuccess =
             handleSuccess;
+
         onboarding.onError =
             handleError;
+
         onboarding.onCancel =
             handleCancel;
+
+        /*
+          OPEN MODAL
+        */
+
         onboarding.open = true;
+
       } catch (error) {
+
         console.error(
             "INIT ERROR",
             error
         );
+
       } finally {
+
         loading.value = false;
       }
     };
@@ -67,12 +153,20 @@ const handleResourceCreated =
           resource
       );
 
+      /*
+        ACCOUNT CREATED
+      */
+
       if (
           resourceType !== "account"
       ) {
 
         return;
       }
+
+      /*
+        ACCOUNT TOKEN
+      */
 
       const accountToken =
           await getMoovToken({
@@ -82,6 +176,10 @@ const handleResourceCreated =
             accountId:
             resource.accountID
           });
+
+      /*
+        UPDATE TOKEN
+      */
 
       onboardingRef.value.token =
           accountToken.access_token;
@@ -214,7 +312,10 @@ const handleCancel =
 
     </div>
 
+    <!-- IMPORTANT -->
+
     <moov-onboarding
+        v-if="onboardingVisible"
         ref="onboardingRef"
     >
     </moov-onboarding>
