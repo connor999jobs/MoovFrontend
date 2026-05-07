@@ -80,13 +80,17 @@ const openOnboarding =
 
           "transfers",
 
+          "wallet.balance",
+
           "collect-funds.ach",
 
           "collect-funds.card-payments",
 
           "send-funds.ach",
 
-          "wallet.balance"
+          "money-transfer.push-to-card",
+
+          "money-transfer.pull-from-card"
         ];
 
         /*
