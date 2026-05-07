@@ -25,7 +25,11 @@ const openOnboarding =
         onboarding.facilitatorAccountID =
             FACILITATOR_ACCOUNT_ID;
         onboarding.capabilities = [
-          "transfers"
+          "transfers",
+          "collect-funds.ach",
+          "collect-funds.card-payments",
+          "send-funds.ach",
+          "wallet.balance"
         ];
         onboarding.accountTypes = [
           "individual",
